@@ -4,9 +4,9 @@ import 'package:adventure_game/adventure_game.dart';
 import 'package:adventure_game/components/collision_block.dart';
 import 'package:adventure_game/components/enemies/angry_pig.dart';
 import 'package:adventure_game/components/enemies/chicken.dart';
-import 'package:adventure_game/components/enemy.dart';
 import 'package:adventure_game/components/player_hitbox.dart';
 import 'package:adventure_game/components/traps/arrow.dart';
+import 'package:adventure_game/components/traps/fire.dart';
 import 'package:adventure_game/components/traps/saw.dart';
 import 'package:adventure_game/components/traps/spike.dart';
 import 'package:adventure_game/components/traps/spike_head.dart';
@@ -15,7 +15,6 @@ import 'package:adventure_game/components/utils.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 import 'box.dart';
 import 'fruit.dart';
@@ -160,6 +159,8 @@ class Player extends SpriteAnimationGroupComponent
       jumpCount = 0;
       _playerJump(diti);
       other.arrowHit();
+    } else if (other is Fire) {
+      other.fireActive ? _playerDead() : other.fireActivated();
     }
 
     super.onCollision(intersectionPoints, other);
@@ -347,7 +348,6 @@ class Player extends SpriteAnimationGroupComponent
           jumpCount = 1;
           break;
         }
-        ;
         if (velocity.y > 0) {
           // Jump on it once
           jumpCount = 1;
@@ -381,11 +381,6 @@ class Player extends SpriteAnimationGroupComponent
           if (checkCollisionFan(this, trap) &&
               trap.current == TrapState.activated) {
             _playerFly(dt);
-          }
-          break;
-        case 'Fire':
-          if (checkCollisionBox(this, trap)) {
-            trap.fireActive ? _playerDead() : trap.fireActivated();
           }
           break;
         default:

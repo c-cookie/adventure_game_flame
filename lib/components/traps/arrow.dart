@@ -23,7 +23,7 @@ class Arrow extends SpriteAnimationGroupComponent
 
     add(CircleHitbox());
 
-    debugMode = true;
+    // debugMode = true;
 
     return super.onLoad();
   }

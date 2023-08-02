@@ -11,7 +11,6 @@ class Trap extends SpriteAnimationGroupComponent
     with HasGameRef<AdventureGame>, CollisionCallbacks {
   bool isStatic; // otherwise it moves in a fixed path
   bool needCollbox;
-  bool fireActive = false;
 
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation activatedAnimation;
@@ -75,14 +74,6 @@ class Trap extends SpriteAnimationGroupComponent
           height: 14,
         );
         break;
-      case 'Fire':
-        hitbox = PlayerHitbox(
-          offsetX: 0,
-          offsetY: 16,
-          width: 16,
-          height: 1,
-        );
-        break;
       default:
     }
   }
@@ -110,16 +101,6 @@ class Trap extends SpriteAnimationGroupComponent
         idleAnimation = _spriteAnimation('Off', 1, 24, 8);
         activatedAnimation = _spriteAnimation('On (24x8)', 4, 24, 8);
         hitAnimation = idleAnimation;
-        break;
-      case 'Fire':
-        idleAnimation = _spriteAnimation('Off', 1, 16, 32);
-        activatedAnimation = _spriteAnimation('On (16x32)', 3, 16, 32);
-        hitAnimation = _spriteAnimation('Hit (16x32)', 4, 16, 32);
-        break;
-      case 'Arrow':
-        idleAnimation = _spriteAnimation('Idle (18x18)', 10, 18, 18);
-        hitAnimation = _spriteAnimation('Hit (18x18)', 10, 18, 18);
-        activatedAnimation = idleAnimation;
         break;
       default:
     }
@@ -151,22 +132,5 @@ class Trap extends SpriteAnimationGroupComponent
           ? TrapState.idle
           : TrapState.activated;
     }
-  }
-
-  void fireActivated() async {
-    current = TrapState.hit;
-
-    await Future.delayed(const Duration(milliseconds: 500))
-        .then((value) => current = TrapState.activated);
-    fireActive = true;
-    await Future.delayed(const Duration(seconds: 2))
-        .then((value) => current = TrapState.idle);
-    fireActive = false;
-  }
-
-  void arrowHit() async {
-    current = TrapState.hit;
-    await Future.delayed(const Duration(milliseconds: 500))
-        .then((value) => removeFromParent());
   }
 }

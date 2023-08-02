@@ -53,10 +53,10 @@
    </properties>
   </object>
   <object id="56" name="Fan" type="StaticTrap" x="100" y="200" width="24" height="8"/>
-  <object id="57" name="Fire" type="StaticTrap" x="496" y="192" width="16" height="32"/>
-  <object id="58" name="Fire" type="StaticTrap" x="512" y="192" width="16" height="32"/>
-  <object id="60" name="Fire" type="StaticTrap" x="528" y="192" width="16" height="32"/>
-  <object id="61" name="Fire" type="StaticTrap" x="544" y="192" width="16" height="32"/>
+  <object id="57" name="Fire" type="Fire" x="496" y="192" width="16" height="32"/>
+  <object id="58" name="Fire" type="Fire" x="512" y="192" width="16" height="32"/>
+  <object id="60" name="Fire" type="Fire" x="528" y="192" width="16" height="32"/>
+  <object id="61" name="Fire" type="Fire" x="544" y="192" width="16" height="32"/>
   <object id="64" name="Rock Head" type="RockHead" x="291.5" y="33.5" width="42" height="42">
    <properties>
     <property name="isVertical" type="bool" value="false"/>
