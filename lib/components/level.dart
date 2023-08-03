@@ -8,6 +8,7 @@ import 'package:adventure_game/components/enemies/chicken.dart';
 import 'package:adventure_game/components/enemy.dart';
 import 'package:adventure_game/components/fruit.dart';
 import 'package:adventure_game/components/traps/arrow.dart';
+import 'package:adventure_game/components/traps/fan.dart';
 import 'package:adventure_game/components/traps/fire.dart';
 import 'package:adventure_game/components/traps/rock_head.dart';
 import 'package:adventure_game/components/traps/saw.dart';
@@ -140,6 +141,15 @@ class Level extends World with HasGameRef<AdventureGame> {
               position: Vector2(spawnPoint.x, spawnPoint.y),
             );
             add(fire);
+            break;
+          case 'Fan':
+            final Fan fan = Fan(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              flowHeight:
+                  spawnPoint.properties.getValue('flyHeight') * blockSize,
+              waitTime: spawnPoint.properties.getValue('waitTime'),
+            );
+            add(fan);
             break;
           case 'Saw':
             final Saw spike = Saw(

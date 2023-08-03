@@ -6,6 +6,7 @@ import 'package:adventure_game/components/enemies/angry_pig.dart';
 import 'package:adventure_game/components/enemies/chicken.dart';
 import 'package:adventure_game/components/player_hitbox.dart';
 import 'package:adventure_game/components/traps/arrow.dart';
+import 'package:adventure_game/components/traps/fan.dart';
 import 'package:adventure_game/components/traps/fire.dart';
 import 'package:adventure_game/components/traps/saw.dart';
 import 'package:adventure_game/components/traps/spike.dart';
@@ -161,6 +162,8 @@ class Player extends SpriteAnimationGroupComponent
       other.arrowHit();
     } else if (other is Fire) {
       other.fireActive ? _playerDead() : other.fireActivated();
+    } else if (other is Fan && other.fanActive) {
+      _playerFly(diti);
     }
 
     super.onCollision(intersectionPoints, other);
@@ -375,12 +378,6 @@ class Player extends SpriteAnimationGroupComponent
             _playerLongJump(dt);
             jumpCount = 0;
             trap.trampolineActivate();
-          }
-          break;
-        case 'Fan':
-          if (checkCollisionFan(this, trap) &&
-              trap.current == TrapState.activated) {
-            _playerFly(dt);
           }
           break;
         default:

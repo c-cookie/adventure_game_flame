@@ -54,16 +54,6 @@ class Trap extends SpriteAnimationGroupComponent
     return super.onLoad();
   }
 
-  @override
-  void update(double dt) {
-    waitTime += dt;
-    if (waitTime >= 6) {
-      _toggleState();
-    }
-
-    super.update(dt);
-  }
-
   void _addHitbox() {
     switch (trapName) {
       case 'Trampoline':
@@ -97,11 +87,6 @@ class Trap extends SpriteAnimationGroupComponent
         activatedAnimation = _spriteAnimation('Jump (28x28)', 8, 28, 28);
         hitAnimation = idleAnimation;
         break;
-      case 'Fan':
-        idleAnimation = _spriteAnimation('Off', 1, 24, 8);
-        activatedAnimation = _spriteAnimation('On (24x8)', 4, 24, 8);
-        hitAnimation = idleAnimation;
-        break;
       default:
     }
 
@@ -121,16 +106,5 @@ class Trap extends SpriteAnimationGroupComponent
     current = TrapState.activated;
     await Future.delayed(const Duration(milliseconds: 300));
     current = TrapState.idle;
-  }
-
-  void _toggleState() {
-    waitTime = 0;
-
-    // Toggle current state
-    if (['Fan'].contains(trapName)) {
-      current = current == TrapState.activated // toggle
-          ? TrapState.idle
-          : TrapState.activated;
-    }
   }
 }
