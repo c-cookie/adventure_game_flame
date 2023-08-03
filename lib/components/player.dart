@@ -11,7 +11,7 @@ import 'package:adventure_game/components/traps/fire.dart';
 import 'package:adventure_game/components/traps/saw.dart';
 import 'package:adventure_game/components/traps/spike.dart';
 import 'package:adventure_game/components/traps/spike_head.dart';
-import 'package:adventure_game/components/traps/static_trap.dart';
+import 'package:adventure_game/components/traps/trampoline.dart';
 import 'package:adventure_game/components/utils.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -49,7 +49,6 @@ class Player extends SpriteAnimationGroupComponent
 
   List<CollisionBlock> collisionBlocks = [];
   List<Box> boxBlocks = [];
-  List<Trap> trapBlocks = [];
 
   bool isFacingRight = true;
   bool isOnGround = true;
@@ -164,6 +163,10 @@ class Player extends SpriteAnimationGroupComponent
       other.fireActive ? _playerDead() : other.fireActivated();
     } else if (other is Fan && other.fanActive) {
       _playerFly(diti);
+    } else if (other is Trampoline) {
+      _playerLongJump(diti);
+      jumpCount = 0;
+      other.trampolineActivate();
     }
 
     super.onCollision(intersectionPoints, other);
@@ -368,19 +371,6 @@ class Player extends SpriteAnimationGroupComponent
             position.x = box.x + box.width + hitbox.width + hitbox.offsetX;
           }
         }
-      }
-    }
-
-    for (final trap in trapBlocks) {
-      switch (trap.trapName) {
-        case 'Trampoline':
-          if (checkCollisionBox(this, trap)) {
-            _playerLongJump(dt);
-            jumpCount = 0;
-            trap.trampolineActivate();
-          }
-          break;
-        default:
       }
     }
   }

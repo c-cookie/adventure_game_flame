@@ -44,7 +44,7 @@
   <object id="45" name="Box" type="Box" x="320" y="192" width="32" height="32"/>
   <object id="48" name="Spikes" type="Spikes" x="336" y="304" width="16" height="16"/>
   <object id="50" name="Spikes" type="Spikes" x="352" y="304" width="16" height="16"/>
-  <object id="53" name="Trampoline" type="StaticTrap" x="18" y="300" width="28" height="28"/>
+  <object id="53" name="Trampoline" type="Trampoline" x="18" y="300" width="28" height="28"/>
   <object id="55" name="Saw" type="Saw" x="269" y="197" width="38" height="38">
    <properties>
     <property name="isVertical" type="bool" value="false"/>

@@ -14,7 +14,7 @@ import 'package:adventure_game/components/traps/rock_head.dart';
 import 'package:adventure_game/components/traps/saw.dart';
 import 'package:adventure_game/components/traps/spike.dart';
 import 'package:adventure_game/components/traps/spike_head.dart';
-import 'package:adventure_game/components/traps/static_trap.dart';
+import 'package:adventure_game/components/traps/trampoline.dart';
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:adventure_game/components/player.dart';
@@ -28,7 +28,6 @@ class Level extends World with HasGameRef<AdventureGame> {
 
   List<CollisionBlock> collisionBlocks = [];
   List<Box> boxBlocks = [];
-  List<Trap> trapBlocks = [];
   List<Enemy> enemies = [];
 
   final int blockSize = 16;
@@ -179,15 +178,11 @@ class Level extends World with HasGameRef<AdventureGame> {
             add(sHead);
             break;
 
-          case 'StaticTrap':
-            final Trap trap = Trap(
-              trapName: spawnPoint.name,
-              isStatic: true,
-              needCollbox: ['Trampoline'].contains(spawnPoint.name),
+          case 'Trampoline':
+            final Trampoline tramp = Trampoline(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
             );
-            trap.position = Vector2(spawnPoint.x, spawnPoint.y);
-            add(trap);
-            trapBlocks.add(trap);
+            add(tramp);
             break;
           default:
         }
@@ -195,7 +190,6 @@ class Level extends World with HasGameRef<AdventureGame> {
     }
 
     player.boxBlocks = boxBlocks;
-    player.trapBlocks = trapBlocks;
   }
 
   void _addCollisions() {
