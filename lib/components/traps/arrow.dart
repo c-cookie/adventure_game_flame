@@ -21,7 +21,9 @@ class Arrow extends SpriteAnimationGroupComponent
   FutureOr<void> onLoad() {
     _loadAllAnimations();
 
-    add(CircleHitbox());
+    add(CircleHitbox(
+      collisionType: CollisionType.passive,
+    ));
 
     // debugMode = true;
 

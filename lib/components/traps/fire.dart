@@ -37,7 +37,8 @@ class Fire extends SpriteAnimationGroupComponent
 
     add(RectangleHitbox(
         position: Vector2(hitbox.offsetX, hitbox.offsetY),
-        size: Vector2(hitbox.width, hitbox.height)));
+        size: Vector2(hitbox.width, hitbox.height),
+        collisionType: CollisionType.passive));
 
     // debugMode = false;
 

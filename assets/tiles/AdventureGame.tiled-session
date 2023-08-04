@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-02.tmx",
+    "activeFile": "level-00.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -18,20 +18,20 @@
         },
         "level-00.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 322.25,
-                "y": 159.25
+                "x": 321.75,
+                "y": 158.75
             }
         },
         "level-01.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 1.5,
             "selectedLayer": 1,
@@ -42,14 +42,14 @@
         },
         "level-02.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 309.25,
-                "y": 186.25
+                "x": 308.75,
+                "y": 185.75
             }
         }
     },
@@ -70,9 +70,9 @@
     "property.type": "int",
     "recentFiles": [
         "Main World.tsx",
-        "level-00.tmx",
-        "level-01.tmx",
         "level-02.tmx",
+        "level-01.tmx",
+        "level-00.tmx",
         "SandMudIce.tsx"
     ],
     "tileset.lastUsedFilter": "Tiled desen seti dosyaları (*.tsx *.xml)",

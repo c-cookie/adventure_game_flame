@@ -41,12 +41,18 @@ class RockHead extends SpriteAnimationGroupComponent
 
   @override
   FutureOr<void> onLoad() {
+    add(RectangleHitbox(
+      position: Vector2.all(4),
+      size: Vector2.all(34),
+      collisionType: CollisionType.passive,
+    ));
+
     _loadAllAnimations();
     verticalMovement = isVertical ? 1 : 0;
     horizontalMovement = isVertical ? 0 : 1;
     initPos = Vector2(position.x, position.y);
 
-    // debugMode = true;
+    debugMode = true;
 
     animations = {
       RockState.blink: blinkAnimation,

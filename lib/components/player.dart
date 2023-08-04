@@ -8,6 +8,7 @@ import 'package:adventure_game/components/player_hitbox.dart';
 import 'package:adventure_game/components/traps/arrow.dart';
 import 'package:adventure_game/components/traps/fan.dart';
 import 'package:adventure_game/components/traps/fire.dart';
+import 'package:adventure_game/components/traps/rock_head.dart';
 import 'package:adventure_game/components/traps/saw.dart';
 import 'package:adventure_game/components/traps/spike.dart';
 import 'package:adventure_game/components/traps/spike_head.dart';
@@ -55,6 +56,7 @@ class Player extends SpriteAnimationGroupComponent
   bool hasJumped = false;
   bool isDead = false;
   bool gotHit = false;
+  bool touchedRock = false;
 
   PlayerHitbox hitbox = PlayerHitbox(
     offsetX: 10,
@@ -62,6 +64,8 @@ class Player extends SpriteAnimationGroupComponent
     width: 14,
     height: 28,
   );
+
+  late RockHead collidedRock;
 
   String character;
   Player({
@@ -167,6 +171,10 @@ class Player extends SpriteAnimationGroupComponent
       _playerLongJump(diti);
       jumpCount = 0;
       other.trampolineActivate();
+    } else if (other is RockHead) {
+      collidedRock = other;
+      touchedRock = true;
+      _applyCollision(this, other);
     }
 
     super.onCollision(intersectionPoints, other);
@@ -299,6 +307,12 @@ class Player extends SpriteAnimationGroupComponent
     for (final block in collisionBlocks) {
       if (!block.isPlatform) {
         if (checkCollision(this, block)) {
+          if (touchedRock &&
+              collidingWith(collidedRock) &&
+              !collidedRock.isVertical) {
+            _playerDead();
+            return;
+          }
           if (velocity.x > 0) {
             velocity.x = 0;
             position.x = block.x - hitbox.offsetX - hitbox.width;
@@ -318,6 +332,23 @@ class Player extends SpriteAnimationGroupComponent
     position.y += velocity.y * dt;
   }
 
+  void _applyCollision(player, RockHead block) {
+    if (position.y <= block.y && velocity.y >= 0) {
+      velocity.y = 0;
+      position.y = block.y - hitbox.height - hitbox.offsetY;
+      isOnGround = true;
+    } else if (position.x <= block.x && block.velocity.x <= 0) {
+      velocity.x = 0;
+      position.x = block.x - hitbox.offsetX - hitbox.width;
+    } else if (position.x >= block.x && block.velocity.x >= 0) {
+      velocity.x = 0;
+      position.x = block.x + block.width + hitbox.width + hitbox.offsetX;
+    } else if (position.y >= block.y - block.height && velocity.y <= 0) {
+      velocity.y = 0;
+      position.y = block.y + block.height - hitbox.offsetY;
+    }
+  }
+
   void _checkVerticalCollisions(double dt) {
     for (final block in collisionBlocks) {
       // Platforms only collide when landing
@@ -332,6 +363,12 @@ class Player extends SpriteAnimationGroupComponent
       // Not a platform
       else {
         if (checkCollision(this, block)) {
+          if (touchedRock &&
+              collidingWith(collidedRock) &&
+              collidedRock.isVertical) {
+            _playerDead();
+            return;
+          }
           if (velocity.y > 0) {
             velocity.y = 0;
             position.y = block.y - hitbox.height - hitbox.offsetY;
