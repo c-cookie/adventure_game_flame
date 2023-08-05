@@ -33,9 +33,12 @@ class Trampoline extends SpriteAnimationGroupComponent
     initPosition = Vector2(position.x, position.y);
     _loadAllAnimations();
 
-    add(RectangleHitbox(
-        position: Vector2(hitbox.offsetX, hitbox.offsetY),
-        size: Vector2(hitbox.width, hitbox.height)));
+    add(
+      RectangleHitbox(
+          position: Vector2(hitbox.offsetX, hitbox.offsetY),
+          size: Vector2(hitbox.width, hitbox.height),
+          collisionType: CollisionType.passive),
+    );
 
     // debugMode = false;
 

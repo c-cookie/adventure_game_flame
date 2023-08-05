@@ -18,7 +18,7 @@ class Bullet extends SpriteComponent
 
   List<CollisionBlock> collisionBlocks = [];
 
-  double verticalSpeed = 75;
+  double verticalSpeed = 120;
 
   Bullet({
     position,
@@ -28,6 +28,7 @@ class Bullet extends SpriteComponent
   FutureOr<void> onLoad() {
     // debugMode = true;
 
+    // Filter those collisions above the bullet (no chance of touching them)
     collisionBlocks = game.world.collisionBlocks;
     collisionBlocks.removeWhere(
       (block) {
@@ -37,10 +38,12 @@ class Bullet extends SpriteComponent
 
     sprite = Sprite(game.images.fromCache('Enemies/Bee/Bullet.png'));
 
-    add(RectangleHitbox(
-        position: Vector2(hitbox.offsetX, hitbox.offsetY),
-        size: Vector2(hitbox.width, hitbox.height),
-        collisionType: CollisionType.passive));
+    add(
+      RectangleHitbox(
+          position: Vector2(hitbox.offsetX, hitbox.offsetY),
+          size: Vector2(hitbox.width, hitbox.height),
+          collisionType: CollisionType.passive),
+    );
     return super.onLoad();
   }
 
@@ -52,7 +55,7 @@ class Bullet extends SpriteComponent
     super.update(dt);
   }
 
-  // TODO: Add particle physics
+  // TODO: Add particle physics after impact
   void _checkCollision() {
     for (final block in collisionBlocks) {
       if (checkCollision(this, block)) {

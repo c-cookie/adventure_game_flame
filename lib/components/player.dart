@@ -6,6 +6,7 @@ import 'package:adventure_game/components/enemies/angry_pig.dart';
 import 'package:adventure_game/components/enemies/bee.dart';
 import 'package:adventure_game/components/enemies/bullet.dart';
 import 'package:adventure_game/components/enemies/chicken.dart';
+import 'package:adventure_game/components/enemies/mushroom.dart';
 import 'package:adventure_game/components/player_hitbox.dart';
 import 'package:adventure_game/components/traps/arrow.dart';
 import 'package:adventure_game/components/traps/fan.dart';
@@ -168,6 +169,13 @@ class Player extends SpriteAnimationGroupComponent
       if (velocity.y > 0) {
         _playerJump(diti);
         other.gotHit();
+      } else {
+        _playerDead();
+      }
+    } else if (other is Mushroom) {
+      if (velocity.y > 0) {
+        _playerJump(diti);
+        other.die();
       } else {
         _playerDead();
       }

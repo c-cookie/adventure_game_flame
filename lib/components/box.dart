@@ -33,9 +33,12 @@ class Box extends SpriteAnimationGroupComponent with HasGameRef<AdventureGame> {
   FutureOr<void> onLoad() {
     _loadAllAnimations();
     // debugMode = true;
-    add(RectangleHitbox(
-        position: Vector2(hitbox.offsetX, hitbox.offsetY),
-        size: Vector2(hitbox.width, hitbox.height)));
+    add(
+      RectangleHitbox(
+          position: Vector2(hitbox.offsetX, hitbox.offsetY),
+          size: Vector2(hitbox.width, hitbox.height),
+          collisionType: CollisionType.passive),
+    );
     return super.onLoad();
   }
 

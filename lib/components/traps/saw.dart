@@ -35,7 +35,7 @@ class Saw extends SpriteAnimationComponent
     horizontalMovement = isVertical ? 0 : 1;
     initPos = Vector2(position.x, position.y);
 
-    add(CircleHitbox());
+    add(CircleHitbox(collisionType: CollisionType.passive));
 
     // debugMode = true;
 

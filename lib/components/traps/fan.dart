@@ -33,11 +33,13 @@ class Fan extends SpriteAnimationGroupComponent
     PlayerHitbox hitbox = PlayerHitbox(
         offsetX: 0, offsetY: -flowHeight, width: 24, height: flowHeight);
 
-    add(RectangleHitbox(
-        position: Vector2(hitbox.offsetX, hitbox.offsetY),
-        size: Vector2(hitbox.width, hitbox.height),
-        isSolid: true,
-        collisionType: CollisionType.passive));
+    add(
+      RectangleHitbox(
+          position: Vector2(hitbox.offsetX, hitbox.offsetY),
+          size: Vector2(hitbox.width, hitbox.height),
+          isSolid: true,
+          collisionType: CollisionType.passive),
+    );
 
     // debugMode = true;
 
