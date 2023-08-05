@@ -19,7 +19,6 @@ class Bee extends SpriteAnimationGroupComponent
 
   final double stepTime = 0.06;
 
-  double horizontalMovement = -1;
   late final double moveSpeed;
   Vector2 velocity = Vector2.zero();
   late final Vector2 initPos;
@@ -30,14 +29,35 @@ class Bee extends SpriteAnimationGroupComponent
     width: 32,
     height: 34,
   );
+  //                   coorIV
+  /*------------------- lenX ----------------
+    |                                        |
+    |                                        |
+    |                                        |
+    |                                        |
+    lenY                                     |
+    | coorIII                                | coorI
+    |                                        |
+    |                                        |
+    |                                        |
+    |                                        |
+    ------------------------------------------ */
+  //                   coorII
 
-  late double pathLength;
+  // Note that bee starts on top left side and then loop coors I-II-III-IV
+
   final int lenX;
   final int lenY;
+
+  // Random points for each side
   late Vector2 coorI, coorII, coorIII, coorIV;
+
+  // Checks if bee arrived those points
   late bool passI, passII, passIII, passIV;
+
   double timeElapsed = 0;
 
+  // Stops counting elapsed time while shooting
   bool isAttacking = false;
 
   Bee({
@@ -46,7 +66,6 @@ class Bee extends SpriteAnimationGroupComponent
     required this.lenY,
   }) : super(position: position);
 
-  // Similar to initstate() in original
   @override
   FutureOr<void> onLoad() {
     // debugMode = true;
@@ -57,9 +76,12 @@ class Bee extends SpriteAnimationGroupComponent
     _setAttributes();
     _updateBeeState();
 
-    add(RectangleHitbox(
-        position: Vector2(hitbox.offsetX, hitbox.offsetY),
-        size: Vector2(hitbox.width, hitbox.height)));
+    add(
+      RectangleHitbox(
+          position: Vector2(hitbox.offsetX, hitbox.offsetY),
+          size: Vector2(hitbox.width, hitbox.height),
+          collisionType: CollisionType.passive),
+    );
 
     return super.onLoad();
   }
@@ -106,6 +128,7 @@ class Bee extends SpriteAnimationGroupComponent
     );
   }
 
+  // For following the randomly generated path
   void _updateBeeMovement(double dt) {
     if (!passI && !passIV) {
       position.moveToTarget(coorI, moveSpeed * dt);
@@ -139,15 +162,19 @@ class Bee extends SpriteAnimationGroupComponent
     }
   }
 
+  // Shoots 4 bullets every (4) seconds
   void _updateBeeState() async {
     if (timeElapsed >= 4) {
       timeElapsed = 0;
       isAttacking = true;
       current = BeeState.attack;
-      for (int i = 0; i < 4; i++) {
-        await Future.delayed(const Duration(milliseconds: 600)).then((value) {
+      await Future.delayed(const Duration(milliseconds: 360))
+          .then((value) => _fireBullet());
+      for (int i = 0; i < 3 && !isRemoved; i++) {
+        await Future.delayed(const Duration(milliseconds: 480)).then((value) {
           _fireBullet();
         });
+        await Future.delayed(const Duration(milliseconds: 60));
       }
       isAttacking = false;
       current = BeeState.idle;
@@ -160,7 +187,7 @@ class Bee extends SpriteAnimationGroupComponent
 
   void _fireBullet() {
     game.world.add(Bullet(
-      position: Vector2(position.x + width / 2, position.y + height),
+      position: Vector2(position.x + width / 2, position.y + height - 5),
     ));
   }
 
@@ -170,6 +197,7 @@ class Bee extends SpriteAnimationGroupComponent
     removeFromParent();
   }
 
+  // After each loop, generate 4 random points for each side for the bee to follow
   void _initialValues() {
     coorI = coorII = coorIII = coorIV = initPos;
     passI = passII = passIII = passIV = false;
