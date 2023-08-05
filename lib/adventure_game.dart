@@ -48,6 +48,7 @@ class AdventureGame extends FlameGame
     cam.viewfinder.anchor = Anchor.topLeft;
 
     addAll([cam, world]);
+    add(FpsTextComponent());
 
     // if (showJoystick) {
     //   addJoystick();

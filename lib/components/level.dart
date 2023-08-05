@@ -4,8 +4,9 @@ import 'package:adventure_game/adventure_game.dart';
 import 'package:adventure_game/components/background_tile.dart';
 import 'package:adventure_game/components/collision_block.dart';
 import 'package:adventure_game/components/enemies/angry_pig.dart';
+import 'package:adventure_game/components/enemies/bee.dart';
 import 'package:adventure_game/components/enemies/chicken.dart';
-import 'package:adventure_game/components/enemy.dart';
+import 'package:adventure_game/components/enemies/enemy.dart';
 import 'package:adventure_game/components/fruit.dart';
 import 'package:adventure_game/components/traps/arrow.dart';
 import 'package:adventure_game/components/traps/fan.dart';
@@ -37,8 +38,10 @@ class Level extends World with HasGameRef<AdventureGame> {
   @override
   FutureOr<void> onLoad() async {
     level = await TiledComponent.load('$levelName.tmx', Vector2.all(16));
+
     add(level);
-    _scrollingBackground();
+    // TODO: Adding a background kills performance
+    // _scrollingBackground();
 
     _spawnObjects();
     _addCollisions();
@@ -101,14 +104,14 @@ class Level extends World with HasGameRef<AdventureGame> {
             add(box);
             boxBlocks.add(box);
             break;
-          case 'Enemy':
-            final Enemy enemy = Enemy(
-              enemy: spawnPoint.name,
-              hPath: spawnPoint.properties.getValue('pathX') * blockSize,
-              position: Vector2(spawnPoint.x, spawnPoint.y),
-            );
-            add(enemy);
-            break;
+          // case 'Enemy':
+          //   final Enemy enemy = Enemy(
+          //     enemy: spawnPoint.name,
+          //     hPath: spawnPoint.properties.getValue('pathX') * blockSize,
+          //     position: Vector2(spawnPoint.x, spawnPoint.y),
+          //   );
+          //   add(enemy);
+          //   break;
           case 'Chicken':
             final Chicken chicken = Chicken(
               hPath: spawnPoint.properties.getValue('pathX') * blockSize,
@@ -122,6 +125,14 @@ class Level extends World with HasGameRef<AdventureGame> {
               position: Vector2(spawnPoint.x, spawnPoint.y),
             );
             add(pig);
+            break;
+          case 'Bee':
+            final Bee bee = Bee(
+              lenX: spawnPoint.properties.getValue('lenX'),
+              lenY: spawnPoint.properties.getValue('lenY'),
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+            );
+            add(bee);
             break;
           case 'Spikes':
             final Spikes spike = Spikes(

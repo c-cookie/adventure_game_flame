@@ -1,3 +1,4 @@
+import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
@@ -15,9 +16,27 @@ void main() async {
     game: AdventureGame(),
     overlayBuilderMap: {
       'PauseMenu': (context, game) {
-        return Container(
-          color: Colors.red,
-          child: const Text('Pause menu'),
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              child: Container(
+                alignment: Alignment.centerLeft,
+                color: Colors.blueAccent,
+                height: 75,
+                child: const Text('Game paused.',
+                    style: TextStyle(
+                        color: Colors.tealAccent,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 40)),
+              ),
+            )
+          ],
         );
       },
       'Buttons': (context, AdventureGame game) {

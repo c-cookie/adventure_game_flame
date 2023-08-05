@@ -52,7 +52,7 @@ class RockHead extends SpriteAnimationGroupComponent
     horizontalMovement = isVertical ? 0 : 1;
     initPos = Vector2(position.x, position.y);
 
-    debugMode = true;
+    // debugMode = true;
 
     animations = {
       RockState.blink: blinkAnimation,

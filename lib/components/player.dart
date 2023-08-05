@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:adventure_game/adventure_game.dart';
 import 'package:adventure_game/components/collision_block.dart';
 import 'package:adventure_game/components/enemies/angry_pig.dart';
+import 'package:adventure_game/components/enemies/bee.dart';
+import 'package:adventure_game/components/enemies/bullet.dart';
 import 'package:adventure_game/components/enemies/chicken.dart';
 import 'package:adventure_game/components/player_hitbox.dart';
 import 'package:adventure_game/components/traps/arrow.dart';
@@ -143,8 +145,18 @@ class Player extends SpriteAnimationGroupComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Fruit) {
       other.doCollectedAnimation();
-    } else if (other is Spikes || other is Saw || other is SpikeHead) {
+    } else if (other is Spikes ||
+        other is Saw ||
+        other is SpikeHead ||
+        other is Bullet) {
       _playerDead();
+    } else if (other is Bee) {
+      if (velocity.y > 0) {
+        _playerJump(diti);
+        other.die();
+      } else {
+        _playerDead();
+      }
     } else if (other is Chicken) {
       if (velocity.y > 0) {
         _playerJump(diti);
@@ -332,11 +344,12 @@ class Player extends SpriteAnimationGroupComponent
     position.y += velocity.y * dt;
   }
 
+  // TODO: You can do it better
   void _applyCollision(player, RockHead block) {
     if (position.y <= block.y && velocity.y >= 0) {
+      isOnGround = true;
       velocity.y = 0;
       position.y = block.y - hitbox.height - hitbox.offsetY;
-      isOnGround = true;
     } else if (position.x <= block.x && block.velocity.x <= 0) {
       velocity.x = 0;
       position.x = block.x - hitbox.offsetX - hitbox.width;

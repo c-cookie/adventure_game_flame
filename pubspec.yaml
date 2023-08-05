@@ -86,6 +86,7 @@ flutter:
     - assets/images/Enemies/Chicken/
     - assets/images/Enemies/Mushroom/
     - assets/images/Enemies/AngryPig/
+    - assets/images/Enemies/Bee/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
