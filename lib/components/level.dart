@@ -6,7 +6,7 @@ import 'package:adventure_game/components/collision_block.dart';
 import 'package:adventure_game/components/enemies/angry_pig.dart';
 import 'package:adventure_game/components/enemies/bee.dart';
 import 'package:adventure_game/components/enemies/chicken.dart';
-import 'package:adventure_game/components/enemies/enemy.dart';
+import 'package:adventure_game/components/enemies/mushroom.dart';
 import 'package:adventure_game/components/fruit.dart';
 import 'package:adventure_game/components/traps/arrow.dart';
 import 'package:adventure_game/components/traps/fan.dart';
@@ -29,7 +29,6 @@ class Level extends World with HasGameRef<AdventureGame> {
 
   List<CollisionBlock> collisionBlocks = [];
   List<Box> boxBlocks = [];
-  List<Enemy> enemies = [];
 
   final int blockSize = 16;
 
@@ -104,14 +103,13 @@ class Level extends World with HasGameRef<AdventureGame> {
             add(box);
             boxBlocks.add(box);
             break;
-          // case 'Enemy':
-          //   final Enemy enemy = Enemy(
-          //     enemy: spawnPoint.name,
-          //     hPath: spawnPoint.properties.getValue('pathX') * blockSize,
-          //     position: Vector2(spawnPoint.x, spawnPoint.y),
-          //   );
-          //   add(enemy);
-          //   break;
+          case 'Mushroom':
+            final Mushroom mush = Mushroom(
+              hPath: spawnPoint.properties.getValue('pathX') * blockSize,
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+            );
+            add(mush);
+            break;
           case 'Chicken':
             final Chicken chicken = Chicken(
               hPath: spawnPoint.properties.getValue('pathX') * blockSize,

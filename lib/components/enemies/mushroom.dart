@@ -5,11 +5,11 @@ import 'package:adventure_game/components/player_hitbox.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-enum EnemyState { idle, running, hit }
+enum MushState { idle, running, hit }
 
 // we have a group of animations , SAGC is good for that
 
-class Enemy extends SpriteAnimationGroupComponent
+class Mushroom extends SpriteAnimationGroupComponent
     with HasGameRef<AdventureGame>, CollisionCallbacks {
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runningAnimation;
@@ -23,7 +23,6 @@ class Enemy extends SpriteAnimationGroupComponent
   late final Vector2 initPos;
 
   bool isFacingRight = true;
-  bool needCollBox = false;
 
   PlayerHitbox hitbox = PlayerHitbox(
     offsetX: 0,
@@ -32,13 +31,10 @@ class Enemy extends SpriteAnimationGroupComponent
     height: 16,
   );
 
-  String enemy;
   double hPath; //horizontal path limit
-  Enemy({
+  Mushroom({
     position,
-    required this.enemy,
     required this.hPath,
-    this.needCollBox = true,
   }) : super(position: position);
 
   // Similar to initstate() in original
@@ -50,49 +46,46 @@ class Enemy extends SpriteAnimationGroupComponent
     _loadAllAnimations();
     _setAttributes();
 
-    if (needCollBox) {
-      add(RectangleHitbox(
+    add(
+      RectangleHitbox(
           position: Vector2(hitbox.offsetX, hitbox.offsetY),
-          size: Vector2(hitbox.width, hitbox.height)));
-    }
+          size: Vector2(hitbox.width, hitbox.height),
+          collisionType: CollisionType.passive),
+    );
+
     return super.onLoad();
   }
 
   @override
   void update(double dt) {
     _updateEnemyMovement(dt);
-    _updateEnemyState();
+    _updateMushState();
 
     super.update(dt);
   }
 
   // All done initially
   void _loadAllAnimations() async {
-    switch (enemy) {
-      case 'Mushroom':
-        idleAnimation = _spriteAnimation('Idle (32x32)', 14, 32, 32);
-        hitAnimation = _spriteAnimation('Hit', 5, 32, 32);
-        runningAnimation = _spriteAnimation('Run (32x32)', 16, 32, 32);
-        break;
-      default:
-    }
+    idleAnimation = _spriteAnimation('Idle (32x32)', 14, 32, 32);
+    hitAnimation = _spriteAnimation('Hit', 5, 32, 32);
+    runningAnimation = _spriteAnimation('Run (32x32)', 16, 32, 32);
 
     // List of all animations
     animations = {
-      EnemyState.hit: hitAnimation,
-      EnemyState.idle: idleAnimation,
-      EnemyState.running: runningAnimation
+      MushState.hit: hitAnimation,
+      MushState.idle: idleAnimation,
+      MushState.running: runningAnimation
     };
 
     // Set current animation
-    current = EnemyState.running;
+    current = MushState.running;
   }
 
   // some cool abstraction for loading sprite animation
   SpriteAnimation _spriteAnimation(
       String state, int amount, double x, double y) {
     return SpriteAnimation.fromFrameData(
-      game.images.fromCache('Enemies/$enemy/$state.png'),
+      game.images.fromCache('Enemies/Mushroom/$state.png'),
       SpriteAnimationData.sequenced(
         amount: amount,
         stepTime: stepTime,
@@ -102,7 +95,7 @@ class Enemy extends SpriteAnimationGroupComponent
   }
 
   void _updateEnemyMovement(double dt) async {
-    if (position.x > initPos.x + hPath) {
+    if (position.x > initPos.x + hPath + width) {
       flipHorizontallyAroundCenter();
       horizontalMovement = -1;
     } else if (position.x < initPos.x - hPath) {
@@ -114,18 +107,14 @@ class Enemy extends SpriteAnimationGroupComponent
     position.x += velocity.x * dt;
   }
 
-  void _updateEnemyState() {}
+  void _updateMushState() {}
 
   void _setAttributes() {
-    switch (enemy) {
-      case 'Mushroom':
-        moveSpeed = 70;
-        break;
-    }
+    moveSpeed = 60;
   }
 
   void die() async {
-    current = EnemyState.hit;
+    current = MushState.hit;
     await Future.delayed(const Duration(milliseconds: 250));
     removeFromParent();
   }
