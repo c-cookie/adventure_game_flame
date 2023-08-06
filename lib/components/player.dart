@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:adventure_game/adventure_game.dart';
 import 'package:adventure_game/components/collision_block.dart';
 import 'package:adventure_game/components/enemies/angry_pig.dart';
+import 'package:adventure_game/components/enemies/bat.dart';
 import 'package:adventure_game/components/enemies/bee.dart';
 import 'package:adventure_game/components/enemies/bullet.dart';
 import 'package:adventure_game/components/enemies/chicken.dart';
@@ -152,28 +153,35 @@ class Player extends SpriteAnimationGroupComponent
         other is Bullet) {
       _playerDead();
     } else if (other is Bee) {
-      if (velocity.y > 0) {
+      if (velocity.y > 0 && isAbove(other)) {
         _playerJump(diti);
         other.die();
       } else {
         _playerDead();
       }
     } else if (other is Chicken) {
-      if (velocity.y > 0) {
+      if (velocity.y > 0 && isAbove(other)) {
         _playerJump(diti);
         other.die();
       } else {
         _playerDead();
       }
     } else if (other is AngryPig) {
-      if (velocity.y > 0) {
+      if (velocity.y > 0 && isAbove(other)) {
         _playerJump(diti);
         other.gotHit();
       } else {
         _playerDead();
       }
     } else if (other is Mushroom) {
-      if (velocity.y > 0) {
+      if (velocity.y > 0 && isAbove(other)) {
+        _playerJump(diti);
+        other.die();
+      } else {
+        _playerDead();
+      }
+    } else if (other is Bat) {
+      if (velocity.y > 0 && isAbove(other)) {
         _playerJump(diti);
         other.die();
       } else {
@@ -447,5 +455,9 @@ class Player extends SpriteAnimationGroupComponent
     current = PlayerState.spawn;
     await Future.delayed(const Duration(seconds: 2))
         .then((value) => current = PlayerState.idle);
+  }
+
+  bool isAbove(PositionComponent other) {
+    return other.position.y >= position.y;
   }
 }

@@ -18,38 +18,38 @@
         },
         "level-00.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 2,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 286.75,
-                "y": 182.75
+                "x": 286.5,
+                "y": 182.25
             }
         },
         "level-01.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
-            "scale": 1.5,
-            "selectedLayer": 1,
+            "scale": 2,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 304.33333333333337,
-                "y": 141.66666666666663
+                "x": 291.5,
+                "y": 185.75
             }
         },
         "level-02.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 2,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 318.75,
-                "y": 182.75
+                "x": 318,
+                "y": 182.25
             }
         }
     },
@@ -67,7 +67,7 @@
         "level-02.tmx"
     ],
     "project": "AdventureGame.tiled-project",
-    "property.type": "int",
+    "property.type": "float",
     "recentFiles": [
         "Main World.tsx",
         "level-00.tmx",

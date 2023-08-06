@@ -4,6 +4,7 @@ import 'package:adventure_game/adventure_game.dart';
 import 'package:adventure_game/components/background_tile.dart';
 import 'package:adventure_game/components/collision_block.dart';
 import 'package:adventure_game/components/enemies/angry_pig.dart';
+import 'package:adventure_game/components/enemies/bat.dart';
 import 'package:adventure_game/components/enemies/bee.dart';
 import 'package:adventure_game/components/enemies/chicken.dart';
 import 'package:adventure_game/components/enemies/mushroom.dart';
@@ -131,6 +132,13 @@ class Level extends World with HasGameRef<AdventureGame> {
               position: Vector2(spawnPoint.x, spawnPoint.y),
             );
             add(bee);
+            break;
+          case 'Bat':
+            final Bat bat = Bat(
+              followRadius: spawnPoint.properties.getValue('followRadius'),
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+            );
+            add(bat);
             break;
           case 'Spikes':
             final Spikes spike = Spikes(
