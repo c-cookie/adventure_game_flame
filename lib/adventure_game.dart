@@ -20,8 +20,8 @@ class AdventureGame extends FlameGame
 
   bool showJoystick = true;
 
-  int maxLevel = 2;
-  int level = 2;
+  int maxLevel = 3;
+  int level = 3;
 
   List<String> characters = [
     'Mask Dude',
@@ -36,7 +36,7 @@ class AdventureGame extends FlameGame
     await images.loadAllImages();
 
     world = Level(
-      levelName: 'level-02',
+      levelName: 'level-03',
       player: player,
     );
 
@@ -149,11 +149,29 @@ class AdventureGame extends FlameGame
   // Toggle pause action
   void gamePauseToggle() {
     if (!paused) {
-      paused = true;
       overlays.add('PauseMenu');
+      paused = true;
     } else if (paused) {
-      paused = false;
       overlays.remove('PauseMenu');
+      paused = false;
     }
+  }
+
+  void restart() {
+    String randomChar = characters[Random().nextInt(4)];
+    final newWorld = Level(
+        levelName: 'Level-0$level', player: Player(character: randomChar));
+
+    removeAll([world, cam]);
+
+    cam = CameraComponent.withFixedResolution(
+      world: newWorld,
+      width: 640,
+      height: 360,
+    );
+    cam.viewfinder.anchor = Anchor.topLeft;
+    world = newWorld;
+
+    addAll([cam, world]);
   }
 }

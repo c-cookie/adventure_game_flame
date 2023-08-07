@@ -49,6 +49,20 @@ void main() async {
                 child: const FittedBox(
                   fit: BoxFit.cover,
                   child: Image(
+                      image: AssetImage('images/Menu/Buttons/Restart.png')),
+                ),
+                onTap: () {
+                  game.restart();
+                },
+              ),
+            ),
+            SizedBox(
+              height: 25,
+              width: 25,
+              child: GestureDetector(
+                child: const FittedBox(
+                  fit: BoxFit.cover,
+                  child: Image(
                       image: AssetImage('images/Menu/Buttons/Previous.png')),
                 ),
                 onTap: () {

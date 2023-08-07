@@ -43,7 +43,7 @@ class Bat extends SpriteAnimationGroupComponent
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    // debugMode = true;
 
     _loadAllAnimations();
     _setAttributes();

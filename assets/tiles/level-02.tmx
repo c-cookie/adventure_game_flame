@@ -75,8 +75,8 @@
   <object id="20" x="368" y="112" width="16" height="32"/>
   <object id="21" x="16" y="16" width="32" height="32"/>
   <object id="22" x="48" y="16" width="16" height="16"/>
-  <object id="23" x="16" y="240" width="48" height="16"/>
-  <object id="41" x="560" y="160" width="48" height="16"/>
+  <object id="23" name="Platform" type="Platform" x="16" y="240" width="48" height="5"/>
+  <object id="41" name="Platform" type="Platform" x="560" y="160" width="48" height="5"/>
  </objectgroup>
  <layer id="1" name="Layout" width="40" height="23">
   <data encoding="csv">

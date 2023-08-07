@@ -58,7 +58,6 @@ class Player extends SpriteAnimationGroupComponent
   bool isFacingRight = true;
   bool isOnGround = true;
   bool hasJumped = false;
-  bool isDead = false;
   bool gotHit = false;
   bool touchedRock = false;
 
@@ -122,23 +121,22 @@ class Player extends SpriteAnimationGroupComponent
   // This func listens for keyboard events
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    if (!isDead) {
-      horizontalMovement = 0;
+    horizontalMovement = 0;
 
-      final isLeftKeyPressed =
-          keysPressed.contains(LogicalKeyboardKey.arrowLeft) ||
-              keysPressed.contains(LogicalKeyboardKey.keyA);
-      final isRightKeyPressed =
-          keysPressed.contains(LogicalKeyboardKey.arrowRight) ||
-              keysPressed.contains(LogicalKeyboardKey.keyD);
+    final isLeftKeyPressed =
+        keysPressed.contains(LogicalKeyboardKey.arrowLeft) ||
+            keysPressed.contains(LogicalKeyboardKey.keyA);
+    final isRightKeyPressed =
+        keysPressed.contains(LogicalKeyboardKey.arrowRight) ||
+            keysPressed.contains(LogicalKeyboardKey.keyD);
 
-      horizontalMovement += isLeftKeyPressed ? -1 : 0;
-      horizontalMovement += isRightKeyPressed ? 1 : 0;
+    horizontalMovement += isLeftKeyPressed ? -1 : 0;
+    horizontalMovement += isRightKeyPressed ? 1 : 0;
 
-      hasJumped = keysPressed.contains(LogicalKeyboardKey.arrowUp) ||
-          keysPressed.contains(LogicalKeyboardKey.keyW) ||
-          keysPressed.contains(LogicalKeyboardKey.space);
-    }
+    hasJumped = keysPressed.contains(LogicalKeyboardKey.arrowUp) ||
+        keysPressed.contains(LogicalKeyboardKey.keyW) ||
+        keysPressed.contains(LogicalKeyboardKey.space);
+
     return super.onKeyEvent(event, keysPressed);
   }
 
@@ -153,35 +151,35 @@ class Player extends SpriteAnimationGroupComponent
         other is Bullet) {
       _playerDead();
     } else if (other is Bee) {
-      if (velocity.y > 0 && isAbove(other)) {
+      if (isAbove(other)) {
         _playerJump(diti);
         other.die();
       } else {
         _playerDead();
       }
     } else if (other is Chicken) {
-      if (velocity.y > 0 && isAbove(other)) {
+      if (isAbove(other)) {
         _playerJump(diti);
         other.die();
       } else {
         _playerDead();
       }
     } else if (other is AngryPig) {
-      if (velocity.y > 0 && isAbove(other)) {
+      if (isAbove(other)) {
         _playerJump(diti);
         other.gotHit();
       } else {
         _playerDead();
       }
     } else if (other is Mushroom) {
-      if (velocity.y > 0 && isAbove(other)) {
+      if (isAbove(other)) {
         _playerJump(diti);
         other.die();
       } else {
         _playerDead();
       }
     } else if (other is Bat) {
-      if (velocity.y > 0 && isAbove(other)) {
+      if (isAbove(other)) {
         _playerJump(diti);
         other.die();
       } else {
@@ -381,7 +379,7 @@ class Player extends SpriteAnimationGroupComponent
   void _checkVerticalCollisions(double dt) {
     for (final block in collisionBlocks) {
       // Platforms only collide when landing
-      if (block.isPlatform) {
+      if (block.isPlatform && checkCollision(this, block)) {
         if (velocity.y > 0) {
           velocity.y = 0;
           position.y = block.y - hitbox.height - hitbox.offsetY;
@@ -447,7 +445,6 @@ class Player extends SpriteAnimationGroupComponent
     isFacingRight = true;
     isOnGround = false;
     hasJumped = false;
-    isDead = false;
     gotHit = false;
   }
 

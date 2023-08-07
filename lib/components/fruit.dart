@@ -10,8 +10,7 @@ enum FruitState { idle, collected }
 
 class Fruit extends SpriteAnimationGroupComponent
     with HasGameRef<AdventureGame>, CollisionCallbacks {
-  late final SpriteAnimation appleAnimation;
-  late final SpriteAnimation kiwiAnimation;
+  late final SpriteAnimation fruitAnimation;
   late final SpriteAnimation collectedAnimation;
 
   final double stepTime = 0.04;
@@ -57,13 +56,12 @@ class Fruit extends SpriteAnimationGroupComponent
 
   // All done initially
   void _loadAllAnimations() {
-    appleAnimation = _spriteAnimation('Apple', 17);
-    kiwiAnimation = _spriteAnimation('Kiwi', 17);
+    fruitAnimation = _spriteAnimation(fruitName, 17);
     collectedAnimation = _spriteAnimation('Collected', 6);
 
     // List of all animations
     animations = {
-      FruitState.idle: fruitName == 'Apple' ? appleAnimation : kiwiAnimation,
+      FruitState.idle: fruitAnimation,
       FruitState.collected: collectedAnimation,
     };
 

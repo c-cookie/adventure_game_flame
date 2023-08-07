@@ -40,7 +40,7 @@ class Mushroom extends SpriteAnimationGroupComponent
   // Similar to initstate() in original
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
+    // debugMode = true;
     initPos = Vector2(position.x, position.y);
 
     _loadAllAnimations();

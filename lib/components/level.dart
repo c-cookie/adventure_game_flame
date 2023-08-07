@@ -94,7 +94,8 @@ class Level extends World with HasGameRef<AdventureGame> {
             add(player);
             break;
           case 'Fruit':
-            final Fruit fruit = Fruit(fruitName: 'Apple');
+            final Fruit fruit = Fruit();
+            fruit.fruitName = spawnPoint.name;
             fruit.position = Vector2(spawnPoint.x, spawnPoint.y);
             add(fruit);
             break;
