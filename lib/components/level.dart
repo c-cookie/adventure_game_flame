@@ -107,14 +107,16 @@ class Level extends World with HasGameRef<AdventureGame> {
             break;
           case 'Mushroom':
             final Mushroom mush = Mushroom(
-              hPath: spawnPoint.properties.getValue('pathX') * blockSize,
+              left: spawnPoint.properties.getValue('left') * blockSize,
+              right: spawnPoint.properties.getValue('right') * blockSize,
               position: Vector2(spawnPoint.x, spawnPoint.y),
             );
             add(mush);
             break;
           case 'Chicken':
             final Chicken chicken = Chicken(
-              hPath: spawnPoint.properties.getValue('pathX') * blockSize,
+              left: spawnPoint.properties.getValue('left') * blockSize,
+              right: spawnPoint.properties.getValue('right') * blockSize,
               position: Vector2(spawnPoint.x, spawnPoint.y),
             );
             add(chicken);

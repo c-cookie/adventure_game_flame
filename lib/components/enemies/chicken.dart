@@ -31,10 +31,11 @@ class Chicken extends SpriteAnimationGroupComponent
     height: 34,
   );
 
-  double hPath; //horizontal path limit
+  final double left, right; // Path limits in pixels
   Chicken({
     position,
-    required this.hPath,
+    required this.left,
+    required this.right,
   }) : super(position: position);
 
   // Similar to initstate() in original
@@ -95,10 +96,10 @@ class Chicken extends SpriteAnimationGroupComponent
   }
 
   void _updateEnemyMovement(double dt) async {
-    if (position.x > initPos.x + hPath) {
+    if (position.x > initPos.x + right) {
       flipHorizontallyAroundCenter();
       horizontalMovement = -1;
-    } else if (position.x < initPos.x - hPath) {
+    } else if (position.x < initPos.x - left) {
       flipHorizontallyAroundCenter();
       horizontalMovement = 1;
     }

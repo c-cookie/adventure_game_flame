@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-03.tmx",
+    "activeFile": "level-00.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -22,10 +22,10 @@
                 3
             ],
             "scale": 2,
-            "selectedLayer": 3,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 287,
-                "y": 187.25
+                "x": 301.25,
+                "y": 196.75
             }
         },
         "level-01.tmx": {
@@ -33,11 +33,11 @@
                 2,
                 3
             ],
-            "scale": 11,
+            "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 100.72727272727272,
-                "y": 286.22727272727275
+                "x": 305,
+                "y": 170.99999999999997
             }
         },
         "level-02.tmx": {
@@ -48,8 +48,8 @@
             "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 291,
-                "y": 181.75
+                "x": 309.25,
+                "y": 183.75
             }
         },
         "level-03.tmx": {
@@ -57,11 +57,11 @@
                 4,
                 3
             ],
-            "scale": 2,
-            "selectedLayer": 2,
+            "scale": 1.5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 296,
-                "y": 186.25
+                "x": 297,
+                "y": 182.99999999999997
             }
         }
     },
@@ -80,13 +80,13 @@
         "level-03.tmx"
     ],
     "project": "AdventureGame.tiled-project",
-    "property.type": "float",
+    "property.type": "int",
     "recentFiles": [
         "Main World.tsx",
-        "level-00.tmx",
-        "level-01.tmx",
-        "level-02.tmx",
         "level-03.tmx",
+        "level-02.tmx",
+        "level-01.tmx",
+        "level-00.tmx",
         "SandMudIce.tsx"
     ],
     "tileset.lastUsedFilter": "Tiled desen seti dosyaları (*.tsx *.xml)",

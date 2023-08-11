@@ -29,7 +29,8 @@ class Bullet extends SpriteComponent
     // debugMode = true;
 
     // Filter those collisions above the bullet (no chance of touching them)
-    collisionBlocks = game.world.collisionBlocks;
+    // We need a copy of them, not the reference !!
+    collisionBlocks = game.world.collisionBlocks.toList();
     collisionBlocks.removeWhere(
       (block) {
         return block.y <= position.y;

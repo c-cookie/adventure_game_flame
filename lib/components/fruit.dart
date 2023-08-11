@@ -32,6 +32,7 @@ class Fruit extends SpriteAnimationGroupComponent
 
   @override
   FutureOr<void> onLoad() {
+    if (fruitName == 'Fruit') fruitName = 'Apple';
     _loadAllAnimations();
     // debugMode = true;
     add(

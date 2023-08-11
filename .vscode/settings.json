@@ -1,3 +1,4 @@
 {
-  "cmake.configureOnOpen": false
+  "cmake.configureOnOpen": false,
+  "cmake.sourceDirectory": "C:/Users/DELL/Desktop/coding/fluffer/adventure_game/linux"
 }

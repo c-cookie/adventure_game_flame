@@ -31,10 +31,11 @@ class Mushroom extends SpriteAnimationGroupComponent
     height: 16,
   );
 
-  double hPath; //horizontal path limit
+  final double right, left; // path length in pixels
   Mushroom({
     position,
-    required this.hPath,
+    required this.right,
+    required this.left,
   }) : super(position: position);
 
   // Similar to initstate() in original
@@ -95,10 +96,10 @@ class Mushroom extends SpriteAnimationGroupComponent
   }
 
   void _updateEnemyMovement(double dt) async {
-    if (position.x > initPos.x + hPath + width) {
+    if (position.x > initPos.x + right + width) {
       flipHorizontallyAroundCenter();
       horizontalMovement = -1;
-    } else if (position.x < initPos.x - hPath) {
+    } else if (position.x < initPos.x - left) {
       flipHorizontallyAroundCenter();
       horizontalMovement = 1;
     }
