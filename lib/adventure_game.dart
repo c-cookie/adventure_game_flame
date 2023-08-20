@@ -20,7 +20,7 @@ class AdventureGame extends FlameGame
 
   bool showJoystick = true;
 
-  int maxLevel = 3;
+  int maxLevel = 4;
   int level = 3;
 
   List<String> characters = [

@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-00.tmx",
+    "activeFile": "level-04.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -24,8 +24,8 @@
             "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 301.25,
-                "y": 196.75
+                "x": 338.25,
+                "y": 183.75
             }
         },
         "level-01.tmx": {
@@ -36,8 +36,8 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 305,
-                "y": 170.99999999999997
+                "x": 319.66666666666663,
+                "y": 184.33333333333334
             }
         },
         "level-02.tmx": {
@@ -46,22 +46,34 @@
                 3
             ],
             "scale": 2,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 309.25,
+                "x": 319.75,
                 "y": 183.75
             }
         },
         "level-03.tmx": {
             "expandedObjectLayers": [
-                4,
-                3
+                3,
+                4
             ],
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 297,
-                "y": 182.99999999999997
+                "x": 319.66666666666663,
+                "y": 184.33333333333334
+            }
+        },
+        "level-04.tmx": {
+            "expandedObjectLayers": [
+                3,
+                4
+            ],
+            "scale": 2,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 378.75,
+                "y": 183.75
             }
         }
     },
@@ -77,16 +89,18 @@
         "level-00.tmx",
         "level-01.tmx",
         "level-02.tmx",
-        "level-03.tmx"
+        "level-03.tmx",
+        "level-04.tmx"
     ],
     "project": "AdventureGame.tiled-project",
     "property.type": "int",
     "recentFiles": [
         "Main World.tsx",
-        "level-03.tmx",
-        "level-02.tmx",
-        "level-01.tmx",
         "level-00.tmx",
+        "level-01.tmx",
+        "level-02.tmx",
+        "level-03.tmx",
+        "level-04.tmx",
         "SandMudIce.tsx"
     ],
     "tileset.lastUsedFilter": "Tiled desen seti dosyaları (*.tsx *.xml)",

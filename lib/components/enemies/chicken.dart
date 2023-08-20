@@ -17,12 +17,13 @@ class Chicken extends SpriteAnimationGroupComponent
 
   final double stepTime = 0.05;
 
-  double horizontalMovement = -1;
+  double horizontalMovement = 0;
   late final double moveSpeed;
   Vector2 velocity = Vector2.zero();
   late final Vector2 initPos;
 
-  bool isFacingRight = true;
+  bool isFacingRight = false;
+  bool isHit = false;
 
   PlayerHitbox hitbox = PlayerHitbox(
     offsetX: 0,
@@ -59,9 +60,10 @@ class Chicken extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
-    _updateEnemyMovement(dt);
-    _updateEnemyState();
-
+    if (!isHit) {
+      _updateEnemyState();
+      _updateEnemyMovement(dt);
+    }
     super.update(dt);
   }
 
@@ -79,7 +81,7 @@ class Chicken extends SpriteAnimationGroupComponent
     };
 
     // Set current animation
-    current = ChickenState.running;
+    current = ChickenState.idle;
   }
 
   // some cool abstraction for loading sprite animation
@@ -95,26 +97,57 @@ class Chicken extends SpriteAnimationGroupComponent
     );
   }
 
-  void _updateEnemyMovement(double dt) async {
-    if (position.x > initPos.x + right) {
-      flipHorizontallyAroundCenter();
-      horizontalMovement = -1;
-    } else if (position.x < initPos.x - left) {
-      flipHorizontallyAroundCenter();
-      horizontalMovement = 1;
+  void _updateEnemyMovement(double dt) {
+    // Stops if it reaches a boundary
+    if (position.x > initPos.x + right || position.x < initPos.x - left) {
+      horizontalMovement = 0;
+      position.x =
+          position.x > initPos.x + right ? initPos.x + right : initPos.x - left;
+      current = ChickenState.idle;
+    }
+
+    // Starts chasing if player enters its running area
+    if (game.world.player.position.x >= initPos.x - left &&
+        game.world.player.position.x + game.world.player.width <
+            initPos.x + right) {
+      if (game.world.player.position.x >= position.x + width) {
+        horizontalMovement = 1;
+      }
+      if (game.world.player.position.x < position.x - width) {
+        horizontalMovement = -1;
+      }
+    }
+
+    // stops otherwise
+    else {
+      horizontalMovement = 0;
+      current = ChickenState.idle;
     }
 
     velocity.x = horizontalMovement * moveSpeed;
     position.x += velocity.x * dt;
   }
 
-  void _updateEnemyState() {}
+  void _updateEnemyState() {
+    if (horizontalMovement != 0) {
+      current = ChickenState.running;
+      if (horizontalMovement == 1 && !isFacingRight) {
+        flipHorizontallyAroundCenter();
+        isFacingRight = true;
+      }
+      if (horizontalMovement == -1 && isFacingRight) {
+        flipHorizontallyAroundCenter();
+        isFacingRight = false;
+      }
+    }
+  }
 
   void _setAttributes() {
     moveSpeed = 100;
   }
 
   void die() async {
+    isHit = true;
     current = ChickenState.hit;
     await Future.delayed(const Duration(milliseconds: 250));
     removeFromParent();
