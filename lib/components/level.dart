@@ -31,7 +31,7 @@ class Level extends World with HasGameRef<AdventureGame> {
   List<CollisionBlock> collisionBlocks = [];
   List<Box> boxBlocks = [];
 
-  final int blockSize = 16;
+  final double blockSize = 16;
 
   Level({required this.levelName, required this.player});
 
@@ -166,7 +166,7 @@ class Level extends World with HasGameRef<AdventureGame> {
               position: Vector2(spawnPoint.x, spawnPoint.y),
               flowHeight:
                   spawnPoint.properties.getValue('flyHeight') * blockSize,
-              waitTime: spawnPoint.properties.getValue('waitTime'),
+              waitTime: spawnPoint.properties.getValue('waitTime').toDouble(),
             );
             add(fan);
             break;

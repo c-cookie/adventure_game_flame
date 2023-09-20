@@ -8,7 +8,8 @@ import 'player_hitbox.dart';
 
 enum BoxState { idle, hit, broken }
 
-class Box extends SpriteAnimationGroupComponent with HasGameRef<AdventureGame> {
+class Box extends SpriteAnimationGroupComponent
+    with HasGameRef<AdventureGame>, CollisionCallbacks {
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation hitAnimation;
   late final SpriteAnimation breakAnimation;

@@ -49,7 +49,8 @@ void main() async {
                 child: const FittedBox(
                   fit: BoxFit.cover,
                   child: Image(
-                      image: AssetImage('images/Menu/Buttons/Restart.png')),
+                      image:
+                          AssetImage('assets/images/Menu/Buttons/Restart.png')),
                 ),
                 onTap: () {
                   game.restart();
@@ -63,7 +64,8 @@ void main() async {
                 child: const FittedBox(
                   fit: BoxFit.cover,
                   child: Image(
-                      image: AssetImage('images/Menu/Buttons/Previous.png')),
+                      image: AssetImage(
+                          'assets/images/Menu/Buttons/Previous.png')),
                 ),
                 onTap: () {
                   game.prevLevel();
@@ -76,8 +78,8 @@ void main() async {
               child: GestureDetector(
                 child: const FittedBox(
                   fit: BoxFit.cover,
-                  child:
-                      Image(image: AssetImage('images/Menu/Buttons/Next.png')),
+                  child: Image(
+                      image: AssetImage('assets/images/Menu/Buttons/Next.png')),
                 ),
                 onTap: () {
                   game.nextLevel();
@@ -90,8 +92,9 @@ void main() async {
               child: GestureDetector(
                 child: const FittedBox(
                   fit: BoxFit.cover,
-                  child:
-                      Image(image: AssetImage('images/Menu/Buttons/Close.png')),
+                  child: Image(
+                      image:
+                          AssetImage('assets/images/Menu/Buttons/Close.png')),
                 ),
                 onTap: () {
                   game.gamePauseToggle();

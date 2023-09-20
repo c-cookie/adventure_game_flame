@@ -67,8 +67,8 @@
   <object id="82" name="Spike Head" type="SpikeHead" x="16" y="85.5" width="54" height="52">
    <properties>
     <property name="isVertical" type="bool" value="false"/>
-    <property name="pathX" type="int" value="554"/>
-    <property name="pathY" type="int" value="9"/>
+    <property name="pathX" type="float" value="554"/>
+    <property name="pathY" type="float" value="9"/>
    </properties>
   </object>
   <object id="83" name="Angry Pig" type="AngryPig" x="486.75" y="290" width="36" height="30">

@@ -10,18 +10,23 @@ import 'package:flame/input.dart';
 import 'package:flutter/painting.dart';
 
 class AdventureGame extends FlameGame
-    with HasKeyboardHandlerComponents, DragCallbacks, HasCollisionDetection {
+    with
+        HasKeyboardHandlerComponents,
+        DragCallbacks,
+        HasCollisionDetection,
+        HasGameRef {
   @override
   Color backgroundColor() => const Color(0xFF211F30);
   late CameraComponent cam;
   late Level world;
   Player player = Player(character: 'Pink Man');
   late JoystickComponent joystick;
+  late ButtonComponent button;
 
-  bool showJoystick = true;
+  bool useMobileControls = true;
 
-  int maxLevel = 4;
-  int level = 3;
+  int maxLevel = 5;
+  int level = 0;
 
   List<String> characters = [
     'Mask Dude',
@@ -36,7 +41,7 @@ class AdventureGame extends FlameGame
     await images.loadAllImages();
 
     world = Level(
-      levelName: 'level-03',
+      levelName: 'level-0$level',
       player: player,
     );
 
@@ -50,9 +55,10 @@ class AdventureGame extends FlameGame
     addAll([cam, world]);
     add(FpsTextComponent());
 
-    // if (showJoystick) {
-    //   addJoystick();
-    // }
+    if (useMobileControls) {
+      addJoystick();
+      addButton();
+    }
 
     return super.onLoad();
   }
@@ -63,26 +69,24 @@ class AdventureGame extends FlameGame
       case JoystickDirection.upLeft:
       case JoystickDirection.downLeft:
         player.horizontalMovement = -1;
-        //player.playerDirection = PlayerDirection.left;
         break;
       case JoystickDirection.right:
       case JoystickDirection.upRight:
       case JoystickDirection.downRight:
         player.horizontalMovement = 1;
-        //player.playerDirection = PlayerDirection.right;
         break;
 
       default:
-        //player.playerDirection = PlayerDirection.none;
+        player.horizontalMovement = 0;
         break;
     }
   }
 
   @override
   void update(double dt) {
-    // if (showJoystick) {
-    //   updateJoystick();
-    // }
+    if (useMobileControls) {
+      updateJoystick();
+    }
     super.update(dt);
   }
 
@@ -99,14 +103,40 @@ class AdventureGame extends FlameGame
         ),
       ),
       margin: const EdgeInsets.only(left: 32, bottom: 86),
+      priority: 10,
     );
     add(joystick);
   }
 
+  void addButton() {
+    button = ButtonComponent(
+      button: SpriteComponent(
+        sprite: Sprite(
+          images.fromCache('HUD/Rectangle 1.png'),
+        ),
+      ),
+      onPressed: () {
+        if (!player.hasJumped) {
+          player.hasJumped = true;
+        }
+      },
+      priority: 10,
+    );
+    //TODO: Modify button position and remove background
+    button.position = gameRef.size - Vector2(150, 150);
+
+    add(button);
+  }
+
   void nextLevel() {
     if (++level <= maxLevel) {
+      String randomChar = characters[Random().nextInt(4)];
+      player = Player(character: randomChar);
+
       final newWorld = Level(
-          levelName: 'Level-0$level', player: Player(character: 'Pink Man'));
+        levelName: 'level-0$level',
+        player: player,
+      );
 
       removeAll([world, cam]);
 
@@ -127,8 +157,12 @@ class AdventureGame extends FlameGame
   void prevLevel() {
     if (--level <= maxLevel && level >= 0) {
       String randomChar = characters[Random().nextInt(4)];
+      player = Player(character: randomChar);
+
       final newWorld = Level(
-          levelName: 'Level-0$level', player: Player(character: randomChar));
+        levelName: 'level-0$level',
+        player: player,
+      );
 
       removeAll([world, cam]);
 
@@ -159,8 +193,11 @@ class AdventureGame extends FlameGame
 
   void restart() {
     String randomChar = characters[Random().nextInt(4)];
+    player = Player(character: randomChar);
     final newWorld = Level(
-        levelName: 'Level-0$level', player: Player(character: randomChar));
+      levelName: 'level-0$level',
+      player: player,
+    );
 
     removeAll([world, cam]);
 

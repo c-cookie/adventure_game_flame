@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-04.tmx",
+    "activeFile": "level-05.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -18,32 +18,44 @@
         },
         "level-00.tmx": {
             "expandedObjectLayers": [
-                2,
-                3
-            ],
-            "scale": 2,
-            "selectedLayer": 1,
-            "viewCenter": {
-                "x": 338.25,
-                "y": 183.75
-            }
-        },
-        "level-01.tmx": {
-            "expandedObjectLayers": [
-                2,
-                3
+                3,
+                2
             ],
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 319.66666666666663,
-                "y": 184.33333333333334
+                "x": 339.66666666666663,
+                "y": 160.33333333333337
+            }
+        },
+        "level-01.tmx": {
+            "expandedObjectLayers": [
+                3,
+                2
+            ],
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 318.33333333333337,
+                "y": 182.99999999999997
             }
         },
         "level-02.tmx": {
             "expandedObjectLayers": [
-                2,
-                3
+                3,
+                2
+            ],
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 318.25,
+                "y": 182.75
+            }
+        },
+        "level-03.tmx": {
+            "expandedObjectLayers": [
+                3,
+                4
             ],
             "scale": 2,
             "selectedLayer": 2,
@@ -52,28 +64,28 @@
                 "y": 183.75
             }
         },
-        "level-03.tmx": {
-            "expandedObjectLayers": [
-                3,
-                4
-            ],
-            "scale": 1.5,
-            "selectedLayer": 1,
-            "viewCenter": {
-                "x": 319.66666666666663,
-                "y": 184.33333333333334
-            }
-        },
         "level-04.tmx": {
             "expandedObjectLayers": [
                 3,
                 4
             ],
-            "scale": 2,
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 319.66666666666663,
+                "y": 184.33333333333334
+            }
+        },
+        "level-05.tmx": {
+            "expandedObjectLayers": [
+                3,
+                4
+            ],
+            "scale": 1.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 378.75,
-                "y": 183.75
+                "x": 344.33333333333337,
+                "y": 160.33333333333337
             }
         }
     },
@@ -85,22 +97,23 @@
     "map.tileWidth": 16,
     "map.width": 40,
     "openFiles": [
-        "Main World.tsx",
-        "level-00.tmx",
-        "level-01.tmx",
-        "level-02.tmx",
-        "level-03.tmx",
-        "level-04.tmx"
-    ],
-    "project": "AdventureGame.tiled-project",
-    "property.type": "int",
-    "recentFiles": [
-        "Main World.tsx",
         "level-00.tmx",
         "level-01.tmx",
         "level-02.tmx",
         "level-03.tmx",
         "level-04.tmx",
+        "level-05.tmx"
+    ],
+    "project": "AdventureGame.tiled-project",
+    "property.type": "int",
+    "recentFiles": [
+        "level-00.tmx",
+        "level-01.tmx",
+        "level-02.tmx",
+        "level-03.tmx",
+        "level-04.tmx",
+        "level-05.tmx",
+        "Main World.tsx",
         "SandMudIce.tsx"
     ],
     "tileset.lastUsedFilter": "Tiled desen seti dosyaları (*.tsx *.xml)",

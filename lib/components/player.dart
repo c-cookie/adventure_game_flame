@@ -39,11 +39,11 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation hitAnimation;
   late final SpriteAnimation spawnAnimation;
 
-  final double stepTime = 0.05;
+  final double stepTime = 0.05; // for sprite animation speed
   final double _gravity = 12;
   final double _jumpForce = 275;
   final double _terminalVelocity = 300;
-  late double diti;
+  late double diti; // to keep track of dt
 
   int jumpCount = 0;
 
@@ -60,6 +60,7 @@ class Player extends SpriteAnimationGroupComponent
   bool hasJumped = false;
   bool gotHit = false;
   bool touchedRock = false;
+  bool doublePass = false; // checks if double jump animation ended
 
   PlayerHitbox hitbox = PlayerHitbox(
     offsetX: 10,
@@ -95,6 +96,7 @@ class Player extends SpriteAnimationGroupComponent
       _updatePlayerMovement(dt);
       if (isOnGround) {
         jumpCount = 0;
+        doublePass = false;
       }
       _updatePlayerState();
       _checkHorizontalCollisions(dt);
@@ -140,7 +142,7 @@ class Player extends SpriteAnimationGroupComponent
     return super.onKeyEvent(event, keysPressed);
   }
 
-  //TODO: WHAT A GREAT WAY TO CHECK COLLISIONS !!!!
+  //WHAT A GREAT WAY TO CHECK COLLISIONS !!!!
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Fruit) {
@@ -201,6 +203,31 @@ class Player extends SpriteAnimationGroupComponent
       collidedRock = other;
       touchedRock = true;
       _applyCollision(this, other);
+    } else if (other is Box) {
+      // hit from above
+      if (isAbove(other) && velocity.y > 0) {
+        jumpCount = 1;
+        _playerJump(diti);
+        other.boxHit();
+      }
+      // hit from below
+      else if (isBelow(other) && velocity.y < 0) {
+        velocity.y = 0;
+        position.y -= 0.1; // much faster solution
+        // position.y = other.y + hitbox.offsetY + hitbox.height;
+        other.boxHit();
+      }
+      // Else it acts like a block
+      else {
+        if (velocity.x > 0) {
+          velocity.x = 0;
+          position.x = other.x - hitbox.offsetX - hitbox.width;
+        }
+        if (velocity.x < 0) {
+          velocity.x = 0;
+          position.x = other.x + other.width + hitbox.width + hitbox.offsetX;
+        }
+      }
     }
 
     super.onCollision(intersectionPoints, other);
@@ -309,7 +336,7 @@ class Player extends SpriteAnimationGroupComponent
     jumpCount++;
   }
 
-  void _updatePlayerState() {
+  void _updatePlayerState() async {
     PlayerState playerState = PlayerState.idle;
 
     if (velocity.x < 0 && scale.x > 0) {
@@ -320,11 +347,15 @@ class Player extends SpriteAnimationGroupComponent
 
     if (velocity.x > 0 || velocity.x < 0) playerState = PlayerState.running;
 
+    if (jumpCount >= 2 && !isOnGround && !doublePass) {
+      current = playerState = PlayerState.doubleJump;
+      await Future.delayed(const Duration(milliseconds: 300));
+      doublePass = true;
+    }
+
     if (velocity.y > _gravity) playerState = PlayerState.falling;
 
     if (velocity.y < 0) playerState = PlayerState.jumping;
-
-    if (jumpCount >= 2 && !isOnGround) playerState = PlayerState.doubleJump;
 
     current = playerState;
   }
@@ -409,34 +440,6 @@ class Player extends SpriteAnimationGroupComponent
         }
       }
     }
-
-    // Checks for box collision
-    for (final box in boxBlocks) {
-      if (checkCollisionBox(this, box)) {
-        if (box.isRemoved) {
-          // Prevents the invisible hitbox to block movement after box breaks
-          jumpCount = 1;
-          break;
-        }
-        if (velocity.y > 0) {
-          // Jump on it once
-          jumpCount = 1;
-          _playerJump(dt);
-          box.boxHit();
-        }
-        // Else it acts like a block
-        else {
-          if (velocity.x > 0) {
-            velocity.x = 0;
-            position.x = box.x - hitbox.offsetX - hitbox.width;
-          }
-          if (velocity.x < 0) {
-            velocity.x = 0;
-            position.x = box.x + box.width + hitbox.width + hitbox.offsetX;
-          }
-        }
-      }
-    }
   }
 
   void _resetAttributes() {
@@ -446,6 +449,7 @@ class Player extends SpriteAnimationGroupComponent
     isOnGround = false;
     hasJumped = false;
     gotHit = false;
+    doublePass = false;
   }
 
   void _spawn() async {
@@ -455,6 +459,17 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   bool isAbove(PositionComponent other) {
-    return other.position.y >= position.y;
+    if (other is Box) {
+      return other.position.y + other.hitbox.offsetY >=
+          position.y + hitbox.offsetY;
+    }
+    return other.position.y >= position.y + hitbox.offsetY;
+  }
+
+  bool isBelow(PositionComponent other) {
+    if (other is Box) {
+      return position.y + hitbox.offsetY >= other.position.y;
+    }
+    return false;
   }
 }

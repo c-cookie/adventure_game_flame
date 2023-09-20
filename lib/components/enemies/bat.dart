@@ -7,8 +7,6 @@ import 'package:flame/components.dart';
 
 enum BatState { idle, flying, hit }
 
-// we have a group of animations , SAGC is good for that
-
 class Bat extends SpriteAnimationGroupComponent
     with HasGameRef<AdventureGame>, CollisionCallbacks {
   late final SpriteAnimation idleAnimation;
@@ -17,7 +15,7 @@ class Bat extends SpriteAnimationGroupComponent
 
   final double stepTime = 0.05;
 
-  // When the player enters this radius once, bat will never stop regardless of where the player is.
+  // When the player enters this radius once, bat will never stop.
   final double followRadius;
 
   late Vector2 playerPos;
